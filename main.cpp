@@ -77,7 +77,29 @@ void checker(vector<int>& a)
 	multiplyingDigits(temp,9,3);
 	cout << "10 cyfra numeru peselu razy 3 = " << temp.at(9) << endl;
 	a=temp;
+}
 
+int sum_of_elems{};
+
+int SumVector(vector<int>& a)
+{
+
+	for (auto& n : a)
+		sum_of_elems+=n;
+	return sum_of_elems;
+}
+
+void CheckSum(int& temp)
+{
+	cout<<temp<<endl;
+	temp=temp % 10;
+	cout<<temp<<endl;
+	temp=10 - temp;
+	cout<<temp<<endl;
+	temp=temp % 10;
+	cout<<temp<<endl;
+	
+	
 }
 
 //algorytmika
@@ -107,7 +129,11 @@ int getNumber()
 int main()
 {
 	vector<int> pesel;
-	pesel.assign({ 1,1,1,1,1,1,1,1,1,1,1 });
+	pesel.assign({ 0,2,0,7,0,8,0,3,6,2,8 });
+	cout<<SumVector(pesel)<<endl;
+	int ControlNumber{SumVector(pesel)}; 
+	CheckSum(ControlNumber);
+		
 
 //	int peselLength{ 10 };
 //	cout << "Enter yout pesel number" << endl;
@@ -126,10 +152,11 @@ int main()
 //		pesel.push_back(temp);
 
 //	}
-	checker(pesel);
-for (int i{}; i < pesel.size(); i++)
-{
-	cout << pesel.at(i) << " ";
-}
-
+//
+//	checker(pesel);
+//for (int i{}; i < pesel.size(); i++)
+//{
+//	cout << pesel.at(i) << " ";
+//}
+//
 }
