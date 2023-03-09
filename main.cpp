@@ -15,6 +15,11 @@ int lastDigit(int n)
 
 void multiplyingDigits(vector<int>& a, int vecIndex , int multiplier)
 {
+	a.at(vecIndex) = a.at(vecIndex) * multiplier;;
+}
+
+void multiplyingDigitsTest(vector<int>& a, int vecIndex , int multiplier)
+{
 	int multiplicationTest{};
 	multiplicationTest = a.at(vecIndex) * multiplier;
 	if (multiplicationTest > 9)
@@ -26,6 +31,7 @@ void multiplyingDigits(vector<int>& a, int vecIndex , int multiplier)
 		a.at(vecIndex) = multiplicationTest;
 	}
 }
+
 
 void controlSum(vector<int>& a)
 {
@@ -83,23 +89,32 @@ int sum_of_elems{};
 
 int SumVector(vector<int>& a)
 {
+	int n{};
 
-	for (auto& n : a)
-		sum_of_elems+=n;
+	for (n = 0; n != a.size()-1; n++){
+		sum_of_elems+=a.at(n);
+	}
 	return sum_of_elems;
 }
 
-void CheckSum(int& temp)
+int CheckSum(int& temp)
 {
-	cout<<temp<<endl;
+	cout<<"i check this numba = "<<temp<<endl;
 	temp=temp % 10;
-	cout<<temp<<endl;
+	cout<<"rest division by 10 = "<<temp<<endl;
 	temp=10 - temp;
-	cout<<temp<<endl;
+	cout<<"10 - my numba = "<<temp<<endl;
 	temp=temp % 10;
-	cout<<temp<<endl;
-	
-	
+	cout<<"rest division by 10 = "<<temp<<endl;
+	return temp;
+}
+
+void EqualComparer(int& temp1, int& temp2)
+{
+	if (temp1==temp2)
+		cout<<"good"<<endl;
+	else
+		cout<<"no good"<<endl;
 }
 
 //algorytmika
@@ -130,9 +145,11 @@ int main()
 {
 	vector<int> pesel;
 	pesel.assign({ 0,2,0,7,0,8,0,3,6,2,8 });
-	cout<<SumVector(pesel)<<endl;
-	int ControlNumber{SumVector(pesel)}; 
-	CheckSum(ControlNumber);
+	checker(pesel);
+	int ControlNumber{SumVector(pesel)};
+
+	int number=CheckSum(ControlNumber);
+	EqualComparer(number, pesel.back());
 		
 
 //	int peselLength{ 10 };
