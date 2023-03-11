@@ -6,6 +6,7 @@ using std::cout;
 using std::endl;
 using std::cin;
 using std::vector;
+using std::pair;
 
 
 int lastDigit(int n)
@@ -50,38 +51,18 @@ void controlSum(vector<int>& a)
 
 void checker(vector<int>& a)
 {
-//	int multiplicationTest{};
 	vector<int> temp{};
 	temp=a;
 	multiplyingDigits(temp,0,1);
-	cout << "1 cyfra numeru peselu razy 1 = " << temp.at(0) << endl;
-
 	multiplyingDigits(temp,1,3);
-	cout << "2 cyfra numeru peselu razy 3 = " << temp.at(1) << endl;
-
 	multiplyingDigits(temp,2,7);
-	cout << "3 cyfra numeru peselu razy 7 = " << temp.at(2) << endl;
-
 	multiplyingDigits(temp,3,9);
-	cout << "4 cyfra numeru peselu razy 9 = " << temp.at(3) << endl;
-
 	multiplyingDigits(temp,4,1);
-	cout << "5 cyfra numeru peselu razy 1 = " << temp.at(4) << endl;
-
 	multiplyingDigits(temp,5,3);
-	cout << "6 cyfra numeru peselu razy 3 = " << temp.at(5) << endl;
-
 	multiplyingDigits(temp,6,7);
-	cout << "7 cyfra numeru peselu razy 7 = " << temp.at(6) << endl;
-
 	multiplyingDigits(temp,7,9);
-	cout << "8 cyfra numeru peselu razy 9 = " << temp.at(7) << endl;
-
 	multiplyingDigits(temp,8,1);
-	cout << "9 cyfra numeru peselu razy 1 = " << temp.at(8) << endl;
-
 	multiplyingDigits(temp,9,3);
-	cout << "10 cyfra numeru peselu razy 3 = " << temp.at(9) << endl;
 	a=temp;
 }
 
@@ -97,24 +78,88 @@ int SumVector(vector<int>& a)
 	return sum_of_elems;
 }
 
+void GenderCheck(vector<int>& a)
+{
+	int GenderControlNumber{a.at(6)*1000+a.at(7)*100+a.at(8)*10+a.at(9)};
+	if (GenderControlNumber % 2 !=0 )
+		cout<<"Male"<<endl;
+	else
+		cout<<"Female"<<endl;
+}
+
+
 int CheckSum(int& temp)
 {
-	cout<<"i check this numba = "<<temp<<endl;
 	temp=temp % 10;
-	cout<<"rest division by 10 = "<<temp<<endl;
 	temp=10 - temp;
-	cout<<"10 - my numba = "<<temp<<endl;
 	temp=temp % 10;
-	cout<<"rest division by 10 = "<<temp<<endl;
 	return temp;
 }
 
 void EqualComparer(int& temp1, int& temp2)
 {
 	if (temp1==temp2)
-		cout<<"good"<<endl;
+		cout<<"That is a correct PESEL number"<<endl;
 	else
-		cout<<"no good"<<endl;
+		cout<<"That is an incorrect PESEL number"<<endl;
+}
+
+pair<int,int> BirthDate(vector<int>& a)
+{
+	int Year{a.at(0)*10+a.at(1)};
+	int Month{a.at(2)*10+a.at(3)};
+	if (Month>=0 & Month<=12)
+	{
+		Month=Month;
+		Year=Year+1900;
+	}
+	else if(Month>=20 & Month<=32)
+	{
+		Month=Month-20;
+		Year=Year+2000;
+	}
+	else if(Month>=40 & Month<=52)
+	{
+		Month=Month-40;
+		Year=Year+2100;
+	}
+	else if(Month>=60 & Month<=72)
+	{
+		Month=Month-60;
+		Year=Year+2200;
+	}
+	else if(Month>=80 & Month<=92)
+	{
+		Month=Month-80;
+		Year=Year+1800;
+	}
+	return {Year,Month};
+
+}
+
+void BirthYear(vector<int>& a)
+{
+	cout<<"Rok urodzenia"<<a.at(0)*10+a.at(1)<<endl;
+	cout<<"Data narodzin to "<<BirthDate(a).first<<" "<<BirthDate(a).second<<" "<<a.at(4)*10+a.at(5)<<endl;
+
+}
+
+vector<int> ConstPesel{};
+
+void DisplayPesel(vector<int>& a)
+{
+	for (int i{}; i < a.size(); i++)
+	{
+		cout << a.at(i) << " ";
+	}
+	cout<<"\n";
+}
+
+vector<int> VectorToVector(vector<int>& a)
+{
+	for (auto& i : a)
+		ConstPesel.push_back(i);
+	return ConstPesel;	
 }
 
 //algorytmika
@@ -144,36 +189,38 @@ int getNumber()
 int main()
 {
 	vector<int> pesel;
-	pesel.assign({ 0,2,0,7,0,8,0,3,6,2,8 });
-	checker(pesel);
-	int ControlNumber{SumVector(pesel)};
+//	pesel.assign({ 0,2,0,7,0,8,0,3,6,2,8 });
 
-	int number=CheckSum(ControlNumber);
-	EqualComparer(number, pesel.back());
-		
+	int peselLength{ 10 };
+	cout << "Enter yout pesel number" << endl;
+	unsigned int temp{};
+	temp=getNumber();
+	if (temp>99999999999 | temp<10000000000)
+		cout<<"Incorrect pesel number"<<endl;
+	else
 
-//	int peselLength{ 10 };
-//	cout << "Enter yout pesel number" << endl;
 //	for (int j{}; j <= peselLength; j++)
 //	{
-//
 //		unsigned int temp{};
-//
 //		temp = getNumber();
 //		while (!(temp <= 9) && (temp >= 1))
 //		{
 //			cout << "error" << endl;
 //			temp = getNumber();
 //		}
-//
 //		pesel.push_back(temp);
-
 //	}
-//
-//	checker(pesel);
-//for (int i{}; i < pesel.size(); i++)
-//{
-//	cout << pesel.at(i) << " ";
-//}
-//
+VectorToVector(pesel);
+DisplayPesel(ConstPesel);
+DisplayPesel(pesel);
+checker(pesel);
+int ControlNumber{SumVector(pesel)};
+int number=CheckSum(ControlNumber);
+EqualComparer(number, ConstPesel.back());
+BirthYear(ConstPesel);	
+DisplayPesel(pesel);
+DisplayPesel(ConstPesel);
+GenderCheck(ConstPesel);
+
 }
+
